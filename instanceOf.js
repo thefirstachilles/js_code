@@ -1,11 +1,15 @@
-const myInstanceof=(myObj,myClass)=>{
-    if(!myObj||!myClass||!myObj.__proto__||!myClass.prototype) return false
-    let current=myObj
-    while(current.__proto__){
-        if(current.__proto__===myClass.prototype) return true
-        current=current.__proto__
+const myInstanceof=(my_var,myClass)=>{
+    if(!my_var||my_var.__proto__||!myClass||!myClass.prototype) return false
+    let temp_var=my_var
+    while(temp_var.__proto__){
+        if(temp_var.__proto__=== myClass.prototype ) return true
+        temp_var = temp_var.__proto__
     }
     return false
 }
-let a=new Number(3)
-console.log(myInstanceof(a,String))
+
+console.log(myInstanceof('',String))
+console.log(myInstanceof('','"'))
+console.log(myInstanceof(null,'"'))
+console.log(myInstanceof('"'))
+
