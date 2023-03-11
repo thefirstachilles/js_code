@@ -147,3 +147,6 @@ class myPromise{
       };
     });
   }
+
+  //手写promise方法
+  

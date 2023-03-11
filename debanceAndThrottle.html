@@ -1,0 +1,36 @@
+<html>
+    <body>
+    <div>
+<button onclick=clickme(1)>click me</button>
+<button onclick=clickyou(2)>click you</button>
+    </div>
+    </body>
+    <script>
+const clickme=debunce((num)=>{console.log(new Date().getSeconds(),num)},1000)
+const clickyou=throttle((num)=>{console.log(new Date().getSeconds(),num)},1000)
+function debunce(fn,delay){
+        let timer=null
+        return (...args)=>{
+            if(timer){
+            clearTimeout(timer)
+            }
+        timer=setTimeout(()=>{
+        fn.call(this,...args)
+        },delay)
+        }
+    }
+function throttle(fn,delay){
+        let runner=null
+        return (...args)=>{
+            if(!runner){
+                runner=setTimeout(
+                    ()=>{fn.call(this,...args);runner=null},delay)
+
+            }
+        }
+    }
+    </script>
+    
+</html>
+
+

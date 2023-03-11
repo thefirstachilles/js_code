@@ -1,4 +1,0 @@
-const hello=(message)=>{
-    console.log(message)
-}
-let x=hello("hell")

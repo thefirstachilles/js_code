@@ -1,0 +1,128 @@
+<html>
+    <style>
+        body{
+            width: 100%;
+            height: 100%;
+           
+        }
+        .container{
+            margin: 10 10 10 10;
+        }
+        .item.left{
+            background-color: blue;
+            float: left;
+            width: 20%;
+        }
+        .item.right{
+            background-color: brown;
+            margin-left: 20%;
+        }
+        .item1.left{
+            background-color: rgb(221, 140, 41);
+            float: left;
+            width: 20%;
+        }
+        .item1.right{
+            background-color: rgb(46, 214, 197);
+            overflow: hidden;
+        }
+        .container.table{
+            display: table;
+            width: 100%;
+            table-layout: auto;
+        }
+        .item2.left{
+            background-color: rgb(107, 41, 221);
+            display: table-cell;
+            width: 20%;
+        }
+        .item2.right{
+            background-color: rgb(80, 214, 46);
+            display: table-cell;
+        }
+        .container.flex{
+            display: flex;
+        }
+        .item3.left{
+            background-color: rgb(41, 119, 221);
+            width: 20%;
+        }
+        .item3.right{
+            background-color: rgb(221, 41, 83);
+            flex:1
+        }
+        .item4.left{
+            background-color: rgb(41, 221, 188);
+            width: 20%;
+            float: left;
+        }
+        .item4.middle{
+            background-color: rgb(221, 221, 41);
+            margin-left: 20%;
+            margin-right: 22%;
+        }
+        .item4.right{
+            background-color: rgb(221, 41, 53);
+            width: 20%;
+            float:right
+        }
+    </style>
+    <body>
+<div class="container">
+<div class="left item">
+    <p>hello</p>
+</div>
+<div class="right item">
+    <p>hello</p>
+    <p>hello</p>
+</div>
+</div>
+<div class="container">
+    <div class="left item1">
+        <p>hello</p>
+    </div>
+    <div class="right item1">
+        <p>hello</p>
+        <p>hello</p>
+    </div>
+    </div>
+    <div class="container table">
+    <div class="left item2">
+        <p>hello</p>
+    </div>
+    <div class="right item2">
+        <p>hello</p>
+        <p>hello</p>
+    </div>
+    </div>
+    <div class="container flex">
+    <div class="left item3">
+        <p>hello</p>
+    </div>
+    <div class="right item3">
+        <p>hello</p>
+        <p>hello</p>
+    </div>
+    </div>
+    <!-- 双飞翼 -->
+
+
+    <!--三栏-->
+    <div class="container">
+        <div class="left item4">
+            <p>hello</p>
+        </div>
+        <div class="middle item4">
+            <p>hello</p>
+            <p>hello</p>
+        </div>
+        <div class="right item4">
+            <p>hello</p>
+            <p>hello</p>
+        </div>
+        </div>
+    </body>
+    <script>
+    </script>
+    
+</html>
