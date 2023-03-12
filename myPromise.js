@@ -124,29 +124,57 @@ class myPromise{
   myPromise.race = function(myPromises){
     return new myPromise((resolve,reject)=>{
       for(let i=0;i<myPromises.length;i++){
-        myPromises[i].then(resolve,reject)
-      };
+        MyPromise.resolve(myPromises[i]).then(res => {
+          resolve(res)  //某一promise完成后直接返回其值
+        }).catch(e => {
+          reject(e)  //如果有错误则直接结束循环，并返回错误
+        })
+      }
     })
   }
   //all方法(获取所有的myPromise，都执行then，把结果放到数组，一起返回)
   myPromise.all = function(myPromises){
-    let arr = [];
-    let i = 0;
-    function processData(index,data){
-      arr[index] = data;
-      i++;
-      if(i == myPromises.length){
-        resolve(arr);
-      };
-    };
-    return new myPromise((resolve,reject)=>{
-      for(let i=0;i<myPromises.length;i++){
-        myPromises[i].then(data=>{
-          processData(i,data);
-        },reject);
-      };
-    });
+    let resPromise = new MyPromise((resolve,reject)=>{
+      let length=myPromises.length
+      let result = []
+      if (length ===0 ){
+        return resolve(res)
+      }
+      myPromises.forEach((promise,index)=>{
+          MyPromise.resolve(promise).then((val)=>{
+            count++
+            result[index]=val
+            if(count===length){
+              resolve(result)
+            }
+          },(reason)=>{reject(reason)})
+      })
+    })
+    // let arr = [];
+    // let i = 0;
+    // function processData(index,data){
+    //   arr[index] = data;
+    //   i++;
+    //   if(i == myPromises.length){
+    //     resolve(arr);
+    //   };
+    // };
+    // return new myPromise((resolve,reject)=>{
+    //   for(let i=0;i<myPromises.length;i++){
+    //     myPromises[i].then(data=>{
+    //       processData(i,data);
+    //     },reject);
+    //   };
+    // });
   }
 
   //手写promise方法
-  
+ const promise1=()=>{
+  const promise= new myPromise((resolve)=>{
+    console.log('a')
+    resolve('a')})
+
+return promise
+}
+  promise1().then((data)=>{console.log(data)})
+  // console.log(promise1().state)

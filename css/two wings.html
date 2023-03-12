@@ -2,7 +2,15 @@
 <body>
 <div id="hd">header</div> 
   <div id="middle">
-    <div id="inside">middle</div>
+    <div id="inside"><h1>middle</h1>
+        <h1>middle</h1>
+        <h1>middle</h1>
+        <h1>middle</h1>
+        <h1>middle</h1>
+        <h1>middle</h1>
+        <h1>middle</h1>
+        <h1>middle</h1>
+        <h1>middle</h1></div>
   </div>
   <div id="left">left</div>
   <div id="right">right</div>
@@ -11,27 +19,27 @@
 
 <style>
 #hd{
-    height:50px;
+    height:10%;
     background: #666;
     text-align: center;
 }
 #middle{
     float:left;
     width:100%;/*左栏上去到第一行*/
-    height:100px;
+    height:80%;
     background:blue;
 }
 #left{
     float:left;
     width:180px;
-    height:100px;
+    height:80%;
     margin-left:-100%;
     background:#0c9;
 }
 #right{
     float:left;
     width:200px;
-    height:100px;
+    height:80%;
     margin-left:-200px;
     background:#0c9;
 }
@@ -39,7 +47,7 @@
 /*给内部div添加margin，把内容放到中间栏，其实整个背景还是100%*/
 #inside{
     margin:0 200px 0 180px;
-    height:100px;
+    height:80%;
 }
 #footer{  
    clear:both; /*记得清楚浮动*/  
