@@ -1,0 +1,87 @@
+<!-- 参考链接：https://juejin.cn/post/6844903890278694919-->
+
+<body>
+    <ul>
+        <li><a href="/page1">turn yellow</a></li>
+        <li><a href="/page2">turn blue</a></li>
+        <li><a href="/page3">turn green</a></li>
+      </ul>
+      <button id="btn">page2</button>
+      <div id="container"></div>
+</body>
+<script>
+class HistoryRouter{
+    constructor(){
+        this.routers={}
+        this.listenPopState()
+        this.listenLink()
+        
+    }
+    listenPopState(){
+        console.log('this',this)
+        window.addEventListener('popstate',(e)=>{
+            let state = e.state || {},
+                path = state.path || '';
+            console.log('windowthis',this)
+            this.dealPathHandler(path)
+        },false)
+    }
+    //全局监听A链接
+    listenLink(){
+        window.addEventListener('click',(e)=>{
+            let dom = e.target;
+            if(dom.tagName.toUpperCase() === 'A' && dom.getAttribute('href')){
+                e.preventDefault()
+                this.assign(dom.getAttribute('href'));
+            }
+        },false)
+    }
+    load(){
+        let path = location.pathname;
+        this.dealPathHandler(path)
+    }
+    register(path,callback = function(){}){
+        this.routers[path] = callback;
+    }
+    //用于注册首页
+    registerIndex(callback = function(){}){
+        this.routers['/'] = callback;
+    }
+    assign(path){
+        history.pushState({path},null,path);
+        this.dealPathHandler(path)
+    }
+    //替换为path
+    replace(path){
+        history.replaceState({path},null,path);
+        this.dealPathHandler(path)
+    }
+    dealPathHandler(path){
+        let handler=this.routers[path];
+        try{
+            handler.call(this)
+        }catch(e){
+            console.error(e);
+        }
+
+    }
+    
+}
+let router = new HistoryRouter();
+let container = document.getElementById('container');
+
+//注册首页回调函数
+router.registerIndex(() => container.innerHTML = '我是首页');
+
+//注册其他视图回到函数
+router.register('/page1', () => container.innerHTML = '我是page1');
+router.register('/page2', () => container.innerHTML = '我是page2');
+router.register('/page3', () => container.innerHTML = '我是page3');
+router.register('/page4', () => {
+    throw new Error('抛出一个异常')
+});
+
+document.getElementById('btn').onclick = () => router.assign('/page2')
+
+
+</script>

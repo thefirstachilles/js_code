@@ -1,0 +1,42 @@
+<body>
+    <ul>
+      <li><a href="#/page1">turn yellow</a></li>
+      <li><a href="#/page2">turn blue</a></li>
+      <li><a href="#/page3">turn green</a></li>
+    </ul>
+    <div id="container"></div>
+</body>
+<script>
+class HashRouter{
+    constructor(){
+        this.routers={}
+        window.addEventListener('hashchange',this.load.bind(this),false)
+    }
+    register(hash,callback){
+        this.routers[hash]=callback
+    }
+    registerIndex(callback){
+        this.routers['index']=callback
+    }
+    load(){
+        console.log(location.hash)
+        let hash=location.hash,handler
+        handler=hash?this.routers[hash]:this.routers['index']
+        console.log(handler)
+        handler.call(this)
+    }
+}
+let router = new HashRouter();
+let container = document.getElementById('container');
+
+//注册首页回调函数
+router.registerIndex(()=> container.innerHTML = '我是首页');
+
+//注册其他视图回到函数
+router.register('#/page1',()=> container.innerHTML = '我是page1');
+router.register('#/page2',()=> container.innerHTML = '我是page2');
+router.register('#/page3',()=> container.innerHTML = '我是page3');
+
+//加载视图
+router.load();
+</script>
