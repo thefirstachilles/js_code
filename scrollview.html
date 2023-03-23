@@ -1,14 +1,21 @@
-<body>
-    <div></div>
-</body>
+<div class="container">
+    <img src="loading.gif"  data-src="pic.png">
+    <img src="loading.gif"  data-src="pic.png">
+    <img src="loading.gif"  data-src="pic.png">
+    <img src="loading.gif"  data-src="pic.png">
+    <img src="loading.gif"  data-src="pic.png">
+    <img src="loading.gif"  data-src="pic.png">
+</div>
 <script>
-let clientHeight  = document.documentElement.clientHeight; //浏览器高度
-let scrollHeight = document.body.scrollHeight;
-let scrollTop = document.documentElement.scrollTop;
- 
-let distance = 50;  //距离视窗还用50的时候，开始触发；
-
-if ((scrollTop + clientHeight) >= (scrollHeight - distance)) {
-    console.log("开始加载数据");
-}
+var imgs = document.querySelectorAll('img');
+function lozyLoad(){
+       var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+       var winHeight= window.innerHeight;
+       for(var i=0;i < imgs.length;i++){
+           if(imgs[i].offsetTop < scrollTop + winHeight ){
+               imgs[i].src = imgs[i].getAttribute('data-src');
+           }
+       }
+   }
+ window.onscroll = lozyLoad();
 </script>
