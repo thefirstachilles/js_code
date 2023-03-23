@@ -1,6 +1,6 @@
 // 被观察者
 class Subject {
-    name: string; //实例上定义一个name属性
+    name: string; 
     state: string;
     observers: any[];
     constructor(name:string) {
@@ -8,11 +8,11 @@ class Subject {
       this.observers = [];
       this.state = "";
     }
-    attach(o) {
+    attach(o:object) {
       //传入观察者
       this.observers.push(o);
     }
-    setState(newState) {
+    setState(newState:string) {
       this.state = newState;
       this.observers.forEach((o) => o.update(this));
     }
@@ -20,10 +20,10 @@ class Subject {
   // 观察者
   class Observer {
     name: string;
-    constructor(name) {
+    constructor(name:string) {
       this.name = name;
     }
-    update(interviewee) {
+    update(interviewee:any) {
       console.log(`${interviewee.name} say to: ${this.name} ZOE的${interviewee.state}`);
     }
   }

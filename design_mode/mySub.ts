@@ -1,4 +1,4 @@
-//发布订阅模式 
+// 发布订阅模式 
 interface CacheProps{
     [key:string]:Array<(data?:unknown)=>void>
 };
@@ -13,13 +13,14 @@ class EventHub{
     }
     off(eventName: string, fn: (data?: unknown) => void){
         if (!this.cache[eventName]) return;
+        
         const index = this.indexOf(this.cache[eventName], fn);
         if (index === -1) return;
         this.cache[eventName].splice(index, 1);
     }
     indexOf (array: any[], item: any){
         for (let i = 0; i < array.length; i++) {
-          if (item === array[i]) {
+          if (item.toString() == array[i].toString()) {
             return i;
           }
         }
@@ -29,4 +30,5 @@ class EventHub{
 let eventhub = new EventHub()
 eventhub.on('hi',(e)=>{console.log('hi',e)})
 eventhub.on('hi',(e)=>{console.log('hello',e)})
+eventhub.off('hi',(e)=>{console.log('hello',e)})
 eventhub.emit('hi','zhouzhou')
