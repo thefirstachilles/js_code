@@ -18,7 +18,7 @@ Function.prototype.myCall=function myCall(...args){
     if(typeof this!=="function"){
         throw new Error("must call with a function")
     }
-    let target = args[0]||whindow
+    let target = args[0]||window
     let fun_name=Symbol('fun')
     target[fun_name] = this
     let newargs = args.slice(1)
@@ -65,19 +65,40 @@ Function.prototype.myBind=function myBind(...args){
 console.log('*********myBind function*******')
 let person3=new Person('zhangsan')
 let method=person3.say.myBind(person_z,[12,'male'])
-method()
-// //手写new
+method('a')
 
-// function myNew(fn,...args){
-// const obj={}
-// obj.__proto__=fn.prototype
-// res=fn.call(obj,...args)
-// if(res) return res
-// else return obj
-// }
-// let myPerson= myNew(Person,"zhouzhou")
-// // console.log("myPerson")
-// myPerson.say()
-// myPerson.listen()
 
-// //手写继承
+//new 
+function myNew(fn,...args){
+    if(typeof fn !== 'function') return
+    let obj={}
+    res = fn.myApply(obj, args)
+    obj.__proto__=fn.prototype
+    return obj
+
+}
+let people1 = myNew(Person, 'sun')
+people1.say(undefined,'female')
+
+//继承
+//组合继承与寄生组合继承
+function Child(name,parent){
+    Person.call(this,name)
+    this.parent = parent || 'Chiang';
+  }
+  Child.prototype=Person.prototype
+let child1 = new Child('chiangsun','sun')
+child1.say('male')
+
+//寄生组合继承
+function Parent(name,child){
+    Person.call(this,name)
+    this.child = child || 'Chiang';
+}
+Parent.prototype = Object.create(Person.prototype, {
+    constructor: {
+      value: Parent
+    }
+  })
+  let parent1 = new Parent('sun', 'chiangsun')
+  parent1.say('male')

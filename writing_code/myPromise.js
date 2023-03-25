@@ -177,4 +177,4 @@ class myPromise{
 return promise
 }
   promise1().then((data)=>{console.log(data)})
-  // console.log(promise1().state)
+  console.log(promise1().state)

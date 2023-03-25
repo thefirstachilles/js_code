@@ -70,6 +70,7 @@ https://juejin.cn/post/6941546135827775525
 https://juejin.cn/post/6941194115392634888
 1. instanceof (2)
 2. 异步编程的实现方式？及区别(4 3)
+3. this 绑定的优先级：默认<隐式（2）<显式<new [url](https://juejin.cn/post/6844903953969184776)
 
 # 输出题
 https://juejin.cn/post/6959043611161952269 （看到第三题）
@@ -94,8 +95,7 @@ https://juejin.cn/post/6946136940164939813
 13. 实现每隔一秒打印 1,2,3,4
 14. 小孩报数问题
 15. 用Promise实现图片的异步加载
-16. 实现发布-订阅模式
-[./mySub.ts]
+16. 实现发布-订阅模式[url](./design_mode/mySub.ts)
 17. 查找文章中出现频率最高的单词
 18. 封装异步的fetch，使用async await方式来使用
 19. 手写继承

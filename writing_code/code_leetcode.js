@@ -1,3 +1,59 @@
+/*数组滑动窗口*/
+// Input: s = "abcabcbb"
+// Output: 3
+// Explanation: The answer is "abc", with the length of 3.
+const lengthOfLongestSubstring = (str) =>{
+    let max_lengh = 0
+    let save_map = new Map()
+    for(let left = 0,right=0; left < str.length,right<str.length; right++){
+        if(save_map.has(str[right])){
+            left = save_map.get(str[right])+1
+
+        }
+        max_lengh = Math.max(max_lengh, right - left+1)
+        save_map.set(str[right],right)
+    }
+    return max_lengh
+}
+const str = "abcabcbb"
+lengthOfLongestSubstring(str)
+/*最长公共子序列*/
+//memory法
+const longestCommonSubsequence=(text1,text2)=>{
+    let comp_arr = new Array (text1.length+1).fill(0).map(()=>new Array(text2.length+1).fill(0))
+    // console.log("comp_arr",comp_arr[1][0])
+    for( let i = 1; i< text1.length+1; i++){
+        for(let j =1; j< text2.length+1; j++){
+            if(text1[i-1]===text2[j-1]){
+                comp_arr[i][j]=comp_arr[i-1][j-1]+1
+            }else{
+                
+                comp_arr[i][j]=Math.max(comp_arr[i-1][j],comp_arr[i][j-1])
+            }
+        }
+    }
+    return comp_arr[text1.length][text2.length]
+}
+console.log(longestCommonSubsequence("1A2C3D4B56","B1D23A456AM"))
+
+/*最长公共子字符串*/
+const longestCommonSubstring=(text1,text2)=>{
+    let comp_arr = new Array (text1.length+1).fill(0).map(()=>new Array(text2.length+1).fill(0))
+    // console.log("comp_arr",comp_arr[1][0])
+    for( let i = 1; i< text1.length+1; i++){
+        for(let j =1; j< text2.length+1; j++){
+            if(text1[i-1]===text2[j-1]){
+                comp_arr[i][j]=comp_arr[i-1][j-1]+1
+            }else{
+                comp_arr[i][j]= comp_arr[i-1][j-1]
+            }
+        }
+    }
+    return comp_arr[text1.length][text2.length]
+}
+console.log(longestCommonSubstring("1A2C3D4B56","B1D23A456AM"))
+
+
 /*排列组合 */
 const combination=(num)=>{
     let stack=[]
@@ -66,6 +122,40 @@ zigzagLevelOrder([testTree])
 
 /*排序*/
 //快速排序
+order_num=[6,3,5,9,5,9,2,3,5,8,7,6]
+const handler = (nums,start,end) =>{
+    let base_number=nums[start]
+    while(start<end){
+       
+        while(start<end && nums[end]>=base_number){
+            end--
+        }
+        if(start<end){
+        nums[start]=nums[end]
+        }
+        while(start<end && nums[start]<=base_number){
+            start++
+        }
+        if(start<end){
+       nums[end]=nums[start]
+        }
+    }
+    nums[start] = base_number
+    return start
+   }
+
+const rank = (nums,left,right) => {
+    if(left>right) return
+    let start = left || 0
+    let end = right || nums.length-1
+    if(start<end) {
+    next = handler(nums,start,end)
+    rank(nums, start, next-1)
+    rank(nums, next+1, end)
+    }
+}
+rank(order_num)
+console.log(order_num)
 
 //堆排序
 
@@ -216,3 +306,5 @@ const reverseList12=(head)=>{
     return reverseHead
 }
 console.log(reverseList12(testLink))
+
+//链表排序

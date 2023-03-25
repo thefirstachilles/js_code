@@ -30,3 +30,25 @@ function Person (name) {
     }
 person1=new Person('zhouzhou')
 console.log('person1',person1.greetDelay())
+
+var id = 'Global';
+
+function fun1() {
+    console.log(this)
+    // setTimeout中使用普通函数
+    setTimeout(function(){
+        console.log(this.id);
+    }, 2000);
+}
+
+function fun2() {
+    console.log(this)
+    // setTimeout中使用箭头函数
+    setTimeout(() => {
+        console.log(this.id);
+    }, 2000)
+}
+
+fun1.call({id: 'Obj'});     // 'Global'
+
+fun2.call({id: 'Obj'});     // 'Obj'
