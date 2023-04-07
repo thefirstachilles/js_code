@@ -86,7 +86,8 @@ function Child(name,parent){
     Person.call(this,name)
     this.parent = parent || 'Chiang';
   }
-  Child.prototype=Person.prototype
+  Child.prototype=new Person()
+  Child.prototype.constructor = Child
 let child1 = new Child('chiangsun','sun')
 child1.say('male')
 
