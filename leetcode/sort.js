@@ -32,60 +32,52 @@ const QuickSort =(nums)=>{
    }
    dp(nums)
 }
-QuickSort(order_num)
+// QuickSort(order_num)
 
 
 
 //堆排序
-
-function heapSort(items) {
-    // 构建大顶堆
-    buildHeap(items, items.length-1)
-    // 设置堆的初始有效序列长度为 items.length - 1
-    let heapSize = items.length - 1
-    for (var i = items.length - 1; i > 1; i--) {
-        // 交换堆顶元素与最后一个有效子元素
-        swap(items, 1, i);
-        // 有效序列长度减 1
-        heapSize --;
-        // 堆化有效序列(有效序列长度为 currentHeapSize，抛除了最后一个元素)
-        heapify(items, heapSize, 1);
-    }
-    return items;
-}
-
-// 原地建堆
-// items: 原始序列
-// heapSize: 有效序列长度
-function buildHeap(items, heapSize) {
-    // 从最后一个非叶子节点开始，自上而下式堆化
-    for (let i = Math.floor(heapSize/2); i >= 1; --i) {    
-        heapify(items, heapSize, i);  
-    }
-}
-function heapify(items, heapSize, i) {
-    // 自上而下式堆化
-    while (true) {
-        var maxIndex = i;
-        if(2*i <= heapSize && items[i] < items[i*2] ) {
-            maxIndex = i*2;
+let heapify = (nums, i, size) =>{
+    while(true){
+        let max_index = i
+        if(2*i+1<=size && nums[2*i+1]>nums[i] && nums[2*i+1]>nums[2*i]  ){
+            max_index = 2 *i+1
         }
-        if(2*i+1 <= heapSize && items[maxIndex] < items[i*2+1] ) {
-            maxIndex = i*2+1;
+        if(2*i+1<=size && nums[2*i]>nums[i] && nums[2*i]>nums[2*i+1]  ){
+            max_index = 2 *i
         }
-        if (maxIndex === i) break;
-        swap(items, i, maxIndex); // 交换 
-        i = maxIndex; 
+        if(2*i<=size&&2*i+1>size && nums[2*i]>nums[i] ){
+            max_index = 2 *i
+        }
+        if(i===max_index){break}
+        let temp = nums[i]
+        nums[i] = nums[max_index]
+        nums[max_index] = temp
+        i = max_index
+       
     }
-}  
-function swap(items, i, j) {
-    let temp = items[i]
-    items[i] = items[j]
-    items[j] = temp
+   
+}
+let buildHeap = (nums) =>{
+    let len = nums.length-1
+    for(let i = Math.floor(len/2); i >0; i--){
+        heapify(nums, i, len)
+    }
+}
+let heapSort = (nums) =>{ 
+    nums.unshift(undefined)
+    buildHeap(nums)
+    num_len =  nums.length -1
+    for(let i = num_len; i>1; i-- ){
+        let temp = nums[1]
+        nums[1] = nums[i]
+        nums[i] = temp
+        heapify(nums, 1, i-1)
+    }
 }
 
 // 测试
-var items = [,1, 9, 2, 8, 3, 7, 4, 6, 5]
+var items = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 heapSort(items)
 // [empty, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 

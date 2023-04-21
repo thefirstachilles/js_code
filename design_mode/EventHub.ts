@@ -1,6 +1,6 @@
 // 发布订阅模式 
-interface CacheProps{
-    [key:string]:Array<(data?:unknown)=>void>
+interface CacheProps {
+    [key:string]:Array<(data?:unknown)=>void>;
 };
 class EventHub{
     private cache:CacheProps={}
@@ -30,5 +30,5 @@ class EventHub{
 let eventhub = new EventHub()
 eventhub.on('hi',(e)=>{console.log('hi',e)})
 eventhub.on('hi',(e)=>{console.log('hello',e)})
-eventhub.off('hi',(e)=>{console.log('hello',e)})
+eventhub.on('hi',(e)=>{console.log('hello',e)})
 eventhub.emit('hi','zhouzhou')
