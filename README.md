@@ -27,12 +27,14 @@ https://juejin.cn/post/6908327746473033741
         - ACK包 acknum = x+1 服务端进入CLOSE_WAIT 客户端进入FIN_WAIT_2
         - 服务端发送FIN 随机序列y 准备好关闭连接 进入LAST_ACK状态
         - ACK包 acknum = y+1 客户端进入TIME_WAIT 等待可能出现的要求重传的包 服务端收到后进入CLOSED状态 酷护短等待2MSL后没响应后也关闭连接进入closed
-    - HTTPs
+    - HTTPS
         - 客户端请求（协议版本号，随机数，客户端支持加密方法）
         - 服务器收到返回（确认加密方法、证书、服务器生成随机数）
         - 客户端确认服务器证书，生成第三个随机数，用公钥加密第三个，发送给服务器，提供前面所有内容的hash值给服务器检验
         - 服务器使用私钥，解密客户端发送随机数，提供前面所有内容hash值给客户端
         - 客户端和服务器端根据约定加密方法生成对话密钥
+    - 对称加密与非对称加密
+        - 
 18. HTTP状态码304是多好还是少好 (1)
 20. 对keep-alive的理解？ Keep-Alive的建立过程（4）服务端自动断开过程（也就是没有keep-alive）（4） 客户端请求断开连接过程 （4） 开启Keep-Alive的优点 （5）
 21. 子网掩码、mac地址、网关 https://www.zhihu.com/question/56895036
@@ -88,6 +90,8 @@ https://juejin.cn/post/6941278592215515143
 # 打包工具
 [webpack 常见面试题参考](https://juejin.cn/post/6844904094281236487)
 - import 和 require [参考资料](https://blog.csdn.net/weixin_38633659/article/details/124373875)
+    - import，ES6标准发布后，module成为标准，编译时执行，写在顶部
+    - require，CommonJs，运行时执行，任何地方
 - webpack常用loader [参考](https://vue3js.cn/interview/webpack/Loader.html)
     - 样式loader：style.* less.* sass.* css.*
     -  file-*（识别出资源模块，移动到指定输出⽬录，输出目录地址） url-*(图片转化为base64) html-minify-* babel loader
@@ -237,7 +241,14 @@ https://juejin.cn/post/6987320619394138148
 
 # 手写js代码
 https://juejin.cn/post/6946136940164939813
-1. 使用Promise封装AJAX请求
+- 异步类
+    - [使用Promise封装AJAX请求](./writing_code_promise/request.js)
+    - [循环打印红黄绿](./writing_code_promise/red_green_light.js)
+    - [用Promise实现图片的异步加载](./writing_code_promise/Image_load.js)
+- react类
+    - [count hook](https://stackblitz.com/edit/react-ts-6vdpuv?file=App.tsx)
+- js类
+    - [手写InstanceOf](./writing_code_js/instanceOf.js)
 2. 实现日期格式化函数
 3. 实现数组的扁平化 （6）
 4. 实现数组去重（2）
@@ -248,11 +259,8 @@ https://juejin.cn/post/6946136940164939813
 9. 将js对象转化为树形结构
 10. 使用ES5和ES6求函数参数的和
 11. 解析 URL Params 为对象
-12. 循环打印红黄绿
 13. 实现每隔一秒打印 1,2,3,4
 14. 小孩报数问题
-15. 用Promise实现图片的异步加载
-16. 实现发布-订阅模式[url](./design_mode/mySub.ts)
 17. 查找文章中出现频率最高的单词
 18. 封装异步的fetch，使用async await方式来使用
 19. 手写继承
@@ -273,7 +281,7 @@ https://juejin.cn/post/7203277707755896869
 
 [手写redux参考](https://juejin.cn/post/6844904074433789959)
 手写react常用hook：
-[count hook](https://stackblitz.com/edit/react-ts-6vdpuv?file=App.tsx)
+
 [手写react事件监听]
 
 
