@@ -1,21 +1,76 @@
 # 网络
 https://juejin.cn/post/6908327746473033741
-1. GET和POST的请求的区别 （6点）
-2. POST和PUT请求的区别 （2点） （？）
-3. 常见的HTTP请求头和响应头 （9 5 4）（？） 
+- 请求与响应
+    - 请求行（请求方法 url 协议版本） ｜ 请求头部（字段名 + 值） ｜ 空行 ｜ 请求体（携带的数据）
+    - 响应行（协议版本 状态码 状态码原因短语 ） ｜ 响应头 ｜ 空行 ｜ 响应体
+    - 请求方法：GET ｜ POST （提交到服务器，服务器资源创建新内容） ｜ PUT （上传文件，服务器资源更新）｜ DELETE （删除服务器上对象）｜ HEAD （获取报文响应头）｜ OPTIONS （在具体资源请求前，1.获取服务器支持的所有HTTP请求方法 2.询问检查访问权限，用来跨域）｜ CONNECT（与代理服务器通信时建立隧道，进行TCP通信）｜TRACE（回显）
+    - GET和POST的请求的区别
+        - GET简单请求，POST对服务器资源影响 ｜ 浏览器一般对Get缓存 ｜ GET报文实体部分为空 POST请求报文实体为向服务器发送的数据 ｜ Get请求参数在url中不安全 ｜ 浏览器对url长度限制，限制了get的数据｜post参数支持更多类型
+    - url：协议｜域名｜端口｜虚拟目录｜文件名｜锚｜参数
+    - 协议版本： 见下面http1 http1.1 http2 https叙述
+    - 请求头字段：
+        - Accept 系列，浏览器能处理的内容类型，包括charset（字符集），encoding（压缩编码），language（语言）
+        - Connection：连接的类型（长连接和短连接）
+        - Cookie
+        - Host（请求的页面的所在域） 与 Referer（请求页面所在url）
+        - User-Agen：用户代理字符串
+    - 状态码：
+        - 
+    - 响应头字段：
+        - Date：消息发送的时间
+        - server：服务器名称
+        - connection:浏览器与服务器之间连接的类型
+        - cache-control：控制缓存
+        - contente-type：后面的文档属于什么类型（application/x-www-form-urlencoded，multipart/form-data，application/json，text/xml）
+- HTTP协议特点：
+    - 无状态（对于事务处理没有记忆能力，每次客户端和服务端会话完成时，服务端不会保存任何会话信息）=》快速 =》重传麻烦
+    - 明文传输 =》不安全
+    - 无连接 每次连接只处理一个请求 =》简单
+    - 允许传输任意类型数据对象 =》灵活
+    - 不验证通信方身份，无法证明报文完整性 =》不安全
+- HTTP1 HTTP1.1 HTTP2 的区别异同
+    - HTTP1 默认非持久短连接
+    - HTTP1.1 
+        - 默认长连接 可以使用管道网络传输（同一个TCP中客户端发出多个请求，不等第一个返回就发第二个，但是服务器返回按照原顺序，形成队头堵塞）
+        - 引入了range头域支持断点续传（返回码是206）
+        - 引入了更多缓存控制如Etag，新增了host字段可以请求发往统一服务器不同网站
+        - 新增了put，head，options等请求方法
+    - HTTP2 并发连接
+        - 二进制帧协议，之前报文请求头必须是文本（ASCAll编码），现在是头信息帧和数据帧，为多路复用铺垫
+        - 多路复用，同一个TCP请求内服用，而且不按照顺序发送，避免队头堵塞
+        - 数据流， 每个请求和响应的所有数据包称为一个数据流，拥有编号进行区分
+        - 请求头信息的压缩，1.gzip和compress压缩后发送 2.客户端和服务器维护一张头信息表，发送索引号
+        - 服务器主动推送
+    - HTTPS（Secure Sockets Layer, TLS与SSL在传输层与应用层之间对网络连接进行加密）
+        连接建立过程，用443端口：
+            - 客户端请求（协议版本号，随机数，客户端支持加密方法）
+            - 服务器收到返回（确认加密方法、CA证书、服务器生成随机数）
+            - 客户端确认服务器证书，生成第三个随机数，用公钥加密第三个，发送给服务器，提供前面所有内容的hash值给服务器检验
+            - 服务器使用私钥，解密客户端发送随机数，提供前面所有内容hash值给客户端
+            - 客户端和服务器端根据约定加密方法生成对话密钥
+        - 对称加密
+        - 非对称加密
+        - 数字证书
+    - HTTP/3基于UDP协议实现了类似于TCP的多路复用数据流、传输可靠性等功能，这套功能被称为QUIC协议
+- URL输入到浏览器后发生的动作：
+    - 解析url（是否合法）
+    - 缓存判断
+    - DNS解析（见DNS解析）
+    - 获取MAC地址
+    - TCP三次握手（或https四次握手）
+    - 返回数据
+    - 页面渲染（见页面渲染）
+    - 四次挥手（见四次挥手）
+
+- 网络模型：
+- TCP 与 UDP
+- WebSocket
 4. HTTP状态码（16）
-5. HTTP请求方法（8）（？）
-6. Options (3 2)
-7. HTTP 1.0 与 HTTP 1.1(5) HTTP 2.0 HTTPS（5）
-8. HTTP和HTTPS协议的区别 (4)
-9. 当在浏览器中输入 Google.com 并且按下回车之后发生了什么？(9)
 10. 对keep-alive的理解
 11. HTTP请求报文的是什么样的？(4)
-12. HTTP协议的优点和缺点(5 3)
-13. URL有哪些组成部分(7)
-14. 与缓存相关的HTTP请求头有哪些 (2 2)
 15. 什么是HTTPS协议？TLS/SSL的工作原理(3)  数字证书是什么？
 16. HTTP状态码304是多好还是少好
+
 - TCP三次握手和四次挥手 [参考资料](https://hit-alibaba.github.io/interview/basic/network/TCP.html)
     - 三次握手
         - SYN 初始随机序列x 发送完进入SYN_SEND状态
@@ -24,15 +79,9 @@ https://juejin.cn/post/6908327746473033741
         - SYN攻击 半连接 ddos攻击 
     - 四次挥手
         - 客户端发送FIN 初始随机序列x 客户端发送完进入FIN_WAIT_1状态
-        - ACK包 acknum = x+1 服务端进入CLOSE_WAIT 客户端进入FIN_WAIT_2
+        - ACK包 acknum = x+1 服务端进入CLOSE_WAIT 客户端收到进入FIN_WAIT_2
         - 服务端发送FIN 随机序列y 准备好关闭连接 进入LAST_ACK状态
-        - ACK包 acknum = y+1 客户端进入TIME_WAIT 等待可能出现的要求重传的包 服务端收到后进入CLOSED状态 酷护短等待2MSL后没响应后也关闭连接进入closed
-    - HTTPS
-        - 客户端请求（协议版本号，随机数，客户端支持加密方法）
-        - 服务器收到返回（确认加密方法、证书、服务器生成随机数）
-        - 客户端确认服务器证书，生成第三个随机数，用公钥加密第三个，发送给服务器，提供前面所有内容的hash值给服务器检验
-        - 服务器使用私钥，解密客户端发送随机数，提供前面所有内容hash值给客户端
-        - 客户端和服务器端根据约定加密方法生成对话密钥
+        - ACK包 acknum = y+1 客户端进入TIME_WAIT 等待可能出现的要求重传的包 服务端收到后进入CLOSED状态 客户端等待2MSL后没响应后也关闭连接进入closed
     - 对称加密与非对称加密
         - 
 18. HTTP状态码304是多好还是少好 (1)
@@ -60,13 +109,16 @@ https://juejin.cn/post/6908327746473033741
 - 三栏布局
     - 绝对定位 ｜ flex ｜浮动+margin（中间一栏必须放在最后）｜ 圣杯布局 （父元素paadding预留左右两栏，中间一列在最前，margin负值使其在同一行）｜双飞翼布局（中间栏的margin预留）
 - 垂直居中方法
-    - 绝对定位 transform：translate（-50%， -50%）｜ 绝对定位（0000 盒子有宽高）｜绝对定位+margin 负值 ｜flex+align和justify 设置center
+    - 绝对定位 transform：translate（-50%， -50%）｜ 绝对定位（0000 盒子有宽高）｜ 绝对定位+margin 负值 ｜flex+align和justify 设置center
 - flex定位
     - direction 方向｜ wrap 换行｜ justif-content｜ align-items｜
     - grow shrink basis order（排序） 
 - 浮动
     - 父元素的高度无法被撑开，影响与父元素同级的元素｜与浮动元素同级的非浮动元素会跟随其后｜若浮动的元素不是第一个元素，则该元素之前的元素也要浮动，否则会影响页面的显示结构
-    - 使用clear属性清除浮动
+    - 最后一个浮动标签末尾添加一个空标签，使用clear属性清除浮动
+    - 使用父元素添加overflow属性清除浮动
+    - 给浮动元素容器添加浮动（不推荐）
+    - 使用：after伪元素，在浮动元素容器后添加一个看不见的div清理浮动
 - BFC
     - box formatting context生成块级盒子
     - body float(除none以外) position（absolute，fixed），display（inline-block，flex） overflow（hidden auto scroll）
@@ -125,12 +177,13 @@ https://juejin.cn/post/6916157109906341902/
 - 浏览器缓存的全过程 
     - 强制缓存 expires（根据绝对值） >>> cache-control （时间之外其他的值精确到秒）
     - 协商缓存 Etag Last-Modified
-    - 缓存过程：发送请求，先看expire和cache-control本地是否过期，命中强制缓存，使用本地缓存资源，没命中就看etag和last-modified，命中的话就分别发送if- none-match和if modified 给服务器判断， 命中协商缓存就返回304，从缓存读数据，没命中就继续请求 
+    - 缓存过程：发送请求，先看expire和cache-control本地是否过期，命中强制缓存，使用本地缓存资源，没命中就看etag和last-modified，命中的话就分别发送if- none-match和if modified since给服务器判断， 命中协商缓存就返回304，从缓存读数据，没命中就继续请求 
 - 对浏览器的理解 （3）
 - 浏览器渲染原理：1. 浏览器的渲染过程 （5） 2. 渲染优化 （4 8）
 - 浏览器本地存储
     - cookie 使用http-only使得脚本无法获取
-    - cookie 、localStorage sessionStorage （3） 
+    - cookie 、localStorage sessionStorage session
+    - [鉴权方式](https://juejin.cn/post/7129298214959710244) 
 10. 什么是同源策略
 11. 浏览器线程与进程 https://juejin.cn/post/6854573217655291918
 12. hash标识和history api
@@ -208,7 +261,40 @@ https://blog.csdn.net/RunLovelace/article/details/127767470
 - Js几种数据类型
 
     （7种基本类型+一个对象 基本类型在栈区 对象在堆区）NaN 是一个特殊值，它和自身不相等，是唯一一个非自反（自反，reflexive，即 x === x 不成立）的值
-- ES5 和 ES6 的异同
+- ES5 和 ES6 的异同 [参考资料](https://www.cnblogs.com/angel648/articles/13256535.html)
+    - 引入了一种新的原始数据类型symbol以支持唯一值
+    - let和const变量 
+        - let 不允许在相同作用域内重复声明同一个变量.
+        - 不存在变量提升
+        - 如果区块中存在 let 和 const ，这个区块从一开始就形成了封闭作用域。凡是在声明之前使用这些变量就会报错。称为 “暂时性死区”。
+        - 如果真的想将对象冻结，应该使用Object.freeze方法
+        -  let，const，class 命令声明的全局变量，不属于顶层对象的属性
+    - 解构赋值
+        - 数组解构赋值几种情况
+        - 如果解构不成功，变量的值就等于 undefined 或者 []
+        - 如果等号的右边不是数组，那么将会报错。
+        - 解构赋值允许指定默认值
+        - 只有当一个数组成员严格等于 undefined ，默认值才会生效
+        - 默认值可以引用解构赋值的其他变量，但该变量必须已经声明。
+        - 对象的解构，{},变量名与属性同名，才能取到正确的值。
+        - 对象的解构赋值的内部机制，是先找到同名属性，然后再赋给对应的变量。真正被赋值的是后者，而不是前者
+        - 对象的解构也可以指定默认值
+        - 字符串也可以解构赋值。字符串被转换成了一个类似数组的对象
+        - 数值和布尔值的解构赋值, 解构赋值时，如果等号右边是数值和布尔值，则会先转化为对象
+        - 由于 undefined 和 null 无法转化为对象，所以对他们进行解构赋值都会报错
+        - 函数参数的解构赋值
+        - 解构的用途 交换变量的值 | 从函数返回多个值 | 函数参数的定义 | 提取JSON数据 | 遍历Map解构
+        - 模板字符串
+        - 箭头函数
+        - 所以如果箭头函数直接返回一个对象，就必须在对象外面加上括号
+        - ES5中 this 的指向是可变的，但是箭头函数中 this 指向固定化
+        -  不可以当构造函数，即不可以使用 new 命令，因为它没有 this，否则会抛出一个错误。｜ 箭头函数没有自己的 this，所以不能使用 call()、apply()、bind() 这些方法去改变 this 指向。｜ 不可以使用arguments 对象，该对象在函数体内不存在。如果要用，可以使用rest参数代替。
+    - 箭头功能
+    - ES6 增加了import命令和class命令。ES6 一共有 6 种声明变量的方法
+    - Babel和Traceur，用于在构建过程中将ES6代码转换为ES5代码
+    - Rest 参数与 Spread 语法 [参考资料](https://zh.javascript.info/rest-parameters-spread)
+    - 对象的扩展
+    - 数组的扩展
 - 类型转换
     - 到数字转化
         - 对象调用toString（）
@@ -223,6 +309,14 @@ https://blog.csdn.net/RunLovelace/article/details/127767470
 - 深拷贝与浅拷贝
     - 浅拷贝：直接赋给另一个变量是浅拷贝，Object.assign和...扩展运算符是一层浅拷贝
     - 深拷贝：JSON方法（不能将方法和undefined属性转化） 递归遍历（Reflect.ownKeys会返回对象的所有自有属性，包括Symbol属性和不可枚举属性）
+- 类数组转化为数组[参考资料](https://juejin.cn/post/6844904151680286734)
+    - slice [].slice.call(arguments)能将具有length属性的对象转成数组
+    - var arr = Array.from(arguments);
+    - var args = [...arguments];
+    - var arr = $.makeArray(arguments);
+- 事件捕获与事件冒泡
+    - 
+
 
 # 设计模式
 [参考资料]()
