@@ -129,6 +129,7 @@ https://juejin.cn/post/6908327746473033741
 
 # HTML
 [参考资料](https://juejin.cn/post/6905294475539513352)
+- meta标签
 
 
 # 性能优化
@@ -146,7 +147,9 @@ https://juejin.cn/post/6941278592215515143
     - require，CommonJs，运行时执行，任何地方
 - webpack常用loader [参考](https://vue3js.cn/interview/webpack/Loader.html)
     - 样式loader：style.* less.* sass.* css.*
-    -  file-*（识别出资源模块，移动到指定输出⽬录，输出目录地址） url-*(图片转化为base64) html-minify-* babel loader
+    -  file-*（识别出资源模块，移动到指定输出⽬录，输出目录地址） url-*(图片转化为base64) html-minify-* babel loader()
+- webpack 常用plugin [参考]()
+    - 
 
 
 
@@ -314,8 +317,16 @@ https://blog.csdn.net/RunLovelace/article/details/127767470
     - var arr = Array.from(arguments);
     - var args = [...arguments];
     - var arr = $.makeArray(arguments);
-- 事件捕获与事件冒泡
-    - 
+- JS事件机制
+    - 事件流：事件捕获（Dom树顶层，直到事件触发到达源元素），目标阶段，事件冒泡（从子节点向父节点传递到达document）（IE浏览器没有事件捕获），可以绑定在捕获和冒泡阶段
+    - 绑定方式：1 作为属性写在html元素上 2 document.onclick  3 addEventListener 前两种是事件冒泡阶段，第三种的第二个参数false在冒泡阶段，true绑定在捕获阶段
+    - 执行顺序，对于同一个元素看先绑定先执行，onclick后覆盖前，addEventListener同一元素绑定多少次执行多少次，onclick早于addeventListener
+    - 事件委托：绑定在父级元素，利用事件冒泡去触发父级事件处理函数的技巧
+    - 事件对象的属性，stopPropagation() .cancelBubble stopImmediatePropagation()：阻止同一个事件的其他监听函数被调用
+- Promise [手写代码](./writing_code_js/myPromise.js)
+    - 状态有pending，fulfilled，rejected
+    - all：所有promise状态fulfilled返回一个所有value的数组，只要一个失败，返回第一个rejected的reason 
+    - 见事件循环机制
 
 
 # 设计模式
