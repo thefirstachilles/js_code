@@ -103,3 +103,24 @@ Parent.prototype = Object.create(Person.prototype, {
   })
   let parent1 = new Parent('sun', 'chiangsun')
   parent1.say('male')
+
+
+//测试this
+  var a = 1;
+function printA(){
+  console.log('2',this)
+  console.log(this.a);
+}
+var obj={
+  a:2,
+  foo:printA,
+  bar:function(){
+    console.log('1',this)
+    printA();
+  }
+}
+
+obj.foo(); // 2
+obj.bar(); // 1
+var foo = obj.foo;
+foo(); // 1
