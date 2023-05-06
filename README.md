@@ -15,7 +15,11 @@
         - Host（请求的页面的所在域） 与 Referer（请求页面所在url）
         - User-Agen：用户代理字符串
     - 状态码：
-        - 
+        - 1xx 接受的请求正在处理
+        - 2xx 200 OK ｜ 204 已经处理 无返回内容（no content）｜206 执行部分请求 包含 content-range指定范围的实体内容 Partial content
+        - 3xx 301 永久重定向 ｜ 302 临时重定向 ｜ 303 类似临时重定向，采用get方法获取资源 see other ｜ 307 不会从post变成get的临时重定向
+        - 4xx 400 报文中语法错误 bad request ｜ 401 需要有http认证性unauthorized｜403 永久禁止，被服务器拒绝，没有详尽理由 forbidden ｜ 404 服务器上无法找到请求的资源 not found ｜ 405 虽然被识别但是使用，get 和 head options 方法预检查看服务器允许的方法 method not allowed
+        - 5xx 500 服务器端在执行请求时发生了 Internal server error｜ 502 网关或代理角色服务器从上游接受响应无效 Bad gateway ｜ 503 超负载停机维护 无法处理请求 service unavailable ｜ 504 表示网关或代理服务器无法在规定时间获得响应 http1.1新加入 Gateway timeout
     - 响应头字段：
         - Date：消息发送的时间
         - server：服务器名称
@@ -86,10 +90,18 @@
         - 拥塞控制（慢启动、拥塞避免、快速重传、快速恢复）
         - 全双工通信
 
-- WebSocket
-4. HTTP状态码（16）
-10. 对keep-alive的理解
-11. HTTP请求报文的是什么样的？(4)
+- WebSocket [参考资料](https://juejin.cn/post/7020964728386093093)
+    - WebSocket 是一种在单个TCP连接上进行全双工通信的协议 ｜ 与 HTTP 协议有着良好的兼容性 80 和 443 ｜ 数据格式轻量 ｜ 发送文本和二进制｜ 无同源限制 ｜ 协议标识符ws（如果加密则为wss）
+    - 单向请求的特点，注定了如果服务器有连续的状态变化，客户端要获知就非常麻烦。我们只能使用"轮询"：每隔一段时候，就发出一个询问。缺点：服务端被迫维持来自每个客户端的大量不同的连接｜ 大量的轮询请求会造成高开销，比如会带上多余的header，造成了无用的数据传输。
+    - WebSocket在建立握手时，数据是通过HTTP传输的。但是建立之后，在真正传输时候是不需要HTTP协议的
+    - 首先，客户端发起http请求，经过3次握手后，建立起TCP连接: http请求里存放WebSocket支持的版本号等信息，如：Upgrade、Connection、WebSocket-Version等 | 然后，服务器收到客户端的握手请求后，同样采用HTTP协议回馈数据 | 最后，客户端收到连接成功的消息后，开始借助于TCP传输信道进行全双工通信。
+    - WebSocket协议一旦建议后，互相沟通所消耗的请求头是很小的;服务器可以向客户端推送消息了 少部分浏览器不支持，浏览器支持的程度与方式有区别（IE10）
+    - 心跳包机制:心跳包之所以叫心跳包是因为：它像心跳一样每隔固定时间发一次，以此来告诉服务器，这个客户端还活着。事实上这是为了保持长连接
+    - 客户端每隔一个时间间隔发生一个探测包给服务器｜客户端发包时启动一个超时定时器｜服务器端接收到检测包，应该回应一个包｜如果客户机收到服务器的应答包，则说明服务器正常，删除超时定时器｜如果客户端的超时定时器超时，依然没有收到应答包，则说明服务器挂了
+
+- 对keep-alive的理解
+    - 
+
 15. 什么是HTTPS协议？TLS/SSL的工作原理(3)  数字证书是什么？
 16. HTTP状态码304是多好还是少好
 
@@ -145,11 +157,13 @@
     - box formatting context生成块级盒子
     - body float(除none以外) position（absolute，fixed），display（inline-block，flex） overflow（hidden auto scroll）
     - 解决margin和高度塌陷问题以及创造自适应两栏布局
+    - box-sizeing: content-box表示标准盒模型（默认值）｜ box-sizeing: border-box表示IE盒模型（怪异盒模型）
 - link引入和@import引入
     - link属于html标签，@import是css提供，只能加载css
     - link在页面加载时被加载，@import在页面加载完之后加载
     -
     - import和link权重取决于代码加载顺序，后面样式覆盖前面
+
 6. 伪元素和伪类的区别和作用？
 7. 为什么有时候⽤translate来改变位置⽽不是定位？（2）
 8. CSS3中有哪些新特性 （9）
@@ -188,6 +202,10 @@ https://juejin.cn/post/6941278592215515143
 - import 和 require [参考资料](https://blog.csdn.net/weixin_38633659/article/details/124373875)
     - import，ES6标准发布后，module成为标准，编译时执行，写在顶部
     - require，CommonJs，运行时执行，任何地方
+    - CommonJS 模块require 命令第一次加载该脚本，内存生成一个对象，该对象的id属性是模块名，exports属性是模块输出的各个接口，loaded属性是一个布尔值，表示该模块的脚本是否执行完毕。以后需要用到这个模块的时候，就会到exports属性上面取值。即使再次执行require命令，也不会再次执行该模块，而是到缓存之中取值。
+    - CommonJS的做法是，一旦出现某个模块被"循环加载"，就只输出已经执行的部分，还未执行的部分不会输出
+    - 这导致ES6处理"循环加载"与CommonJS有本质的不同。ES6根本不会关心是否发生了"循环加载"，只是生成一个指向被加载模块的引用，需要开发者自己保证，真正取值的时候能够取到值。
+    - a.js之所以能够执行，原因就在于ES6加载的变量，都是动态引用其所在的模块。只要引用是存在的，代码就能执行。
 - webpack常用loader [参考](https://vue3js.cn/interview/webpack/Loader.html)
     - 样式loader：style.* less.* sass.* css.*
     -  file-*（识别出资源模块，移动到指定输出⽬录，输出目录地址） url-*(图片转化为base64) html-minify-* babel loader()
@@ -239,7 +257,7 @@ https://juejin.cn/post/6916157109906341902/
     - JSONP：就是利用 script 标签没有跨域限制的漏洞。指向一个需要访问的地址并提供一个回调函数来接收数据当需要通讯时
     - CORS [参考资料](https://www.ruanyifeng.com/blog/2016/04/cors.html)：浏览器和后端同时支持。IE 8 和 9 需要通过 XDomainRequest 来实现。
         - 对于简单请求，浏览器直接发出CORS请求。在头信息中增加一个Origin字段，服务器根据这个值决定是否同意这次请求。如果在许可范围内，服务器返回的响应，会多出几个头信息字段.Access-Control+(Allow-Origin/Allow-Credentials/Expose-Headers)
-        - 对于非简单请求。请求方法是PUT或DELETE，或者Content-Type字段的类型是application/json。会在正式通信之前，增加一次HTTP查询请求，称为"预检"请求。Access-Control+(Request-Method/Request-Headers) 和 Access-Control+(Request-Method/Request-Headers/Allow-Credentials/Max-Age)
+        - 对于非简单请求。请求方法是PUT或DELETE，或者Content-Type字段的类型是application/json。会在正式通信之前，增加一次HTTP查询请求，称为"预检"请求。Access-Control+(Request-Method/Request-Headers) 和 Access-Control+(allow-Method/allow-Headers/Allow-Credentials/Max-Age)
     - websocket：WebSocket和HTTP都是应用层协议，都基于 TCP 协议。但是 WebSocket 是一种双向通信协议，在建立连接之后，WebSocket 的 server 与 client 都能主动向对方发送或接收数据
     - Node中间件代理 createServer 在转发、webpack配置proxyTable设置开发环境跨域、nginx代理跨域
     - postMessage。postMessage是HTML5 XMLHttpRequest Level 2中的API，且是为数不多可以跨域操作的window属性之一，它可用于解决以下方面的问题：页面和其打开的新窗口的数据传递、多窗口之间消息传递、页面与嵌套的iframe消息传递、上面三个场景的跨域数据传递。写明目标窗口的协议、主机地址或端口就可以发信息给它。
@@ -400,7 +418,10 @@ https://blog.csdn.net/RunLovelace/article/details/127767470
     - [输出题](https://juejin.cn/post/6959043611161952269)（第四部分 第1题 第2题）
     - 两者区别在于变量提升，函数声明的 5 会被后边函数表达式的 4 覆盖；
     - new Foo().getName()， 这里等价于 (new Foo()).getName(), 先new一个Foo的实例，再执行这个实例的getName方法，但是这个实例本身没有这个方法，所以去原型链__protot__上边找，实例.protot === Foo.prototype
-
+- 类方法
+    - 静态方法	定义在构造函数上的方法	只能被构造函数访问
+    - 原型方法	通过构造函数的prototype定义的方法	能被实例直接访问，构造函数需通过prototype才可访问
+    - 实例方法	构造函数中this上添加的属性都属于实例属性	只能被实例对象访问
 - 深拷贝与浅拷贝
     - 浅拷贝：直接赋给另一个变量是浅拷贝，Object.assign和...扩展运算符是一层浅拷贝
     - 深拷贝：JSON方法（不能将方法和undefined属性转化） 递归遍历（Reflect.ownKeys会返回对象的所有自有属性，包括Symbol属性和不可枚举属性）
@@ -499,6 +520,16 @@ https://juejin.cn/post/7203277707755896869
 [手写react事件监听]
 
 
+
+# 笔试题 
+万诺coding
+
+招行0502fintech笔试算法 2题 3题看不懂
+美团0429暑期实习笔试真题解析 磁盘调度（堆模拟，看不懂） 树（树形存边）
+华为0427od笔试算法解析 1题（拓扑排序） 2题 （双向链表 hash表模拟） 3题（二分枚举）
+微众银行0423春招笔试真题解析 1题（理解前缀和但不理解二分哈希，需要自己写一下）2题（模拟，主要是在想，js的运算问题，比方排序，妈的） 3题（读不懂题意真要命）
+荣耀0422暑期实习春招算法解析 1题（没辨认出是最短路模型）  3题（经典题）
+蚂蚁0420暑期实习春招笔试算法解析 1题（没想到是这个解法 前缀。。） 2题 （我也没想到） 3题（也是很神奇，算了）
 
 
 
