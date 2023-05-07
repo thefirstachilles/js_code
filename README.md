@@ -521,8 +521,23 @@ https://juejin.cn/post/7203277707755896869
 
 
 # trail 项目
-组件：
-中英文：
+- 组件 antd常用
+    - Button, Dropdown, Input, Menu, MenuProps, message, Modal, Dropdown steps组件（用于样式）
+    - button组件
+
+- coocik登录和token登录，菜单验证方式
+    - 
+- axios：
+    - 
+- 日期组件
+    - 
+
+- 中英文
+    - i18n 组件（用于路由和资源内容)
+    - 语言状态写在localStorage中
+    - 在项目根页面中根据语言状态初始化i18n，校验是否有重复key
+    - t(), 根据语言设定切换
+
 
 
 
