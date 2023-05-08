@@ -1,4 +1,4 @@
-class PubSub {
+/**class PubSub {
     constructor() {
       this.messages = {};
       this.listeners = {};
@@ -75,4 +75,27 @@ subscriberC.subscribe(TYPE_B, res => {
 
 pubsub.notify(TYPE_A);
 pubsub.notify(TYPE_B);
-pubsub.notify(TYPE_C);
+pubsub.notify(TYPE_C);**/
+
+class Pub_Sub{
+  constructor(){
+    this.message = {}
+    this.listener = {}
+  }
+  publish(type, content){
+    if(!this.message[type]){
+      this.message[type] = []
+    }
+    this.message.push(content)
+  }
+  subscribe(type, cb){
+
+  }
+  notify(){
+
+  }
+
+}
+class Publish{
+
+}
