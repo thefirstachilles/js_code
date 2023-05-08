@@ -484,13 +484,22 @@ https://juejin.cn/post/6946136940164939813
     - [count hook](https://stackblitz.com/edit/react-ts-6vdpuv?file=App.tsx)
 - js类
     - [手写InstanceOf](./writing_code_js/instanceOf.js)
+    - [实现数组的扁平化](./writing_code/js/code_arr.js)
+    - [实现数组的filter方法](./writing_code/js/code_arr.js)
+    - [实现类数组转化为数组](./writing_code/js/code_arr.js)
+- 设计模式
+    - [eventBus](./writing_code/data_and_design_mode/EventHub.ts)
+- css格式类
+    - [双翼布局]
+    - [圣杯布局]
+- 功能类
+    - [实现简单路由]
+
 2. 实现日期格式化函数
-3. 实现数组的扁平化 （6）
+
 4. 实现数组去重（2）
 5. 实现数组的map方法
-6. 实现数组的filter方法
 7. 实现非负大整数相加
-8. 实现类数组转化为数组
 9. 将js对象转化为树形结构
 10. 使用ES5和ES6求函数参数的和
 11. 解析 URL Params 为对象
@@ -500,13 +509,13 @@ https://juejin.cn/post/6946136940164939813
 18. 封装异步的fetch，使用async await方式来使用
 19. 手写继承
 20. 实现双向数据绑定
-21. 实现简单路由
+21. 
 22. 使用 setTimeout 实现 setInterval
 23. 实现 jsonp
 24. 判断对象是否存在循环引用
 25. 查找有序二维数组的目标值
 26. 二维数组斜向打印
-27. eventBus
+27. 
 
 # 笔试题 手写算法 手写页面组件css等
 https://blog.51cto.com/u_13961087/5328610

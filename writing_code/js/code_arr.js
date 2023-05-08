@@ -23,13 +23,17 @@ console.log(flatten1(nums));
 console.log(nums.toString().split(','))
 //ES6接口
 console.log(nums.flat(Infinity))
+
 /*实现数组去重*/
 //ES6
 let arr_repeat=[1,3,2,5,6,4,3,7,6]
 console.log(Array.from(new Set(arr_repeat)))
 //map方法
 
+//filter方法
+console.log(arr_repeat.filter((item,index)=>arr_repeat.indexOf(item) ===index))
 /*实现数组filter*/
+
 
 /*类数组转化为数组*/
 let like_arr={0: 1, 1: 2, 2: 3, length:3}
