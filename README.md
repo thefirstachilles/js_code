@@ -324,7 +324,10 @@ https://juejin.cn/post/7182382408807743548
         - 异步调用 等到主线程任务完成，DOM 更新，js 执行完成，视图绘制完毕，才执行
     - usememo
         - 包裹变量 
-    - usecallback 包裹函数
+    - usecallback 
+        - 包裹函数 useCallBack不要每个函数都包一下，否则就会变成反向优化，useCallBack本身就是需要一定性能的
+        useCallBack并不能阻止函数重新创建,它只能通过依赖决定返回新的函数还是旧的函数,从而在依赖不变的情况下保证函数地址不变
+        useCallBack需要配合React.memo使用
     - useRef 返回的ref对象在整个生命周期保持不变
 - redux  [面试相关](https://vue3js.cn/interview/React/redux.html)
     - action：一些函数，返回一个对象，对象包含了type和数据值
@@ -531,6 +534,10 @@ https://juejin.cn/post/7203277707755896869
 
 
 # trail 项目
+- 页面搜索与结果展示
+    - 搜索组件与结果组件的信息是由createContext.Provider实现的
+    - 共享的方法有 defaultSearch, syncUrlOptions, getResult, searchReturns,resultReturns, doSearch 
+    - 实现数据的搜索，url路由的更改，接口请求等功能，具体地说，提供provider中提供了search方法，与表单的onfinish结合调用
 - 组件 antd常用
     - Button, Dropdown, Input, Menu, MenuProps, message, Modal, Dropdown steps组件（用于样式）
     - button组件
