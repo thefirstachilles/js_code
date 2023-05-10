@@ -537,8 +537,13 @@ https://juejin.cn/post/7203277707755896869
 
 - coocik登录和token登录，菜单验证方式
     - 
-- axios：
-    - 
+- service模块：
+    - 封装了请求功能
+    - 处理代理转发环境
+    - 请求成功的处理
+    - 请求失败的提示
+    - 基于axios的request功能，对错误code进行展示以及登录跳转
+    - 基于request的post， get， download 和upload方法
 - 日期组件
     - 
 
