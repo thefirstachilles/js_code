@@ -484,9 +484,11 @@ https://juejin.cn/post/6946136940164939813
     - [count hook](https://stackblitz.com/edit/react-ts-6vdpuv?file=App.tsx)
 - js类
     - [手写InstanceOf](./writing_code_js/instanceOf.js)
+    - [手写继承](./writing_code/js/prototype.js)
     - [实现数组的扁平化](./writing_code/js/code_arr.js)
     - [实现数组的filter方法](./writing_code/js/code_arr.js)
     - [实现类数组转化为数组](./writing_code/js/code_arr.js)
+    - [实现数组去重](./writing_code/js/code_arr.js)
 - 设计模式
     - [eventBus](./writing_code/data_and_design_mode/EventHub.ts)
 - css格式类
@@ -497,17 +499,16 @@ https://juejin.cn/post/6946136940164939813
 
 2. 实现日期格式化函数
 
-4. 实现数组去重（2）
+4. 
 5. 实现数组的map方法
 7. 实现非负大整数相加
 9. 将js对象转化为树形结构
 10. 使用ES5和ES6求函数参数的和
 11. 解析 URL Params 为对象
-13. 实现每隔一秒打印 1,2,3,4
 14. 小孩报数问题
 17. 查找文章中出现频率最高的单词
 18. 封装异步的fetch，使用async await方式来使用
-19. 手写继承
+19. 
 20. 实现双向数据绑定
 21. 
 22. 使用 setTimeout 实现 setInterval
