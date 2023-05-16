@@ -199,13 +199,25 @@ https://juejin.cn/post/6941278592215515143
 
 # 打包工具
 [webpack 常见面试题参考](https://juejin.cn/post/6844904094281236487)
-- import 和 require [参考资料](https://blog.csdn.net/weixin_38633659/article/details/124373875)
-    - import，ES6标准发布后，module成为标准，编译时执行，写在顶部
-    - require，CommonJs，运行时执行，任何地方
-    - CommonJS 模块require 命令第一次加载该脚本，内存生成一个对象，该对象的id属性是模块名，exports属性是模块输出的各个接口，loaded属性是一个布尔值，表示该模块的脚本是否执行完毕。以后需要用到这个模块的时候，就会到exports属性上面取值。即使再次执行require命令，也不会再次执行该模块，而是到缓存之中取值。
-    - CommonJS的做法是，一旦出现某个模块被"循环加载"，就只输出已经执行的部分，还未执行的部分不会输出
-    - 这导致ES6处理"循环加载"与CommonJS有本质的不同。ES6根本不会关心是否发生了"循环加载"，只是生成一个指向被加载模块的引用，需要开发者自己保证，真正取值的时候能够取到值。
-    - a.js之所以能够执行，原因就在于ES6加载的变量，都是动态引用其所在的模块。只要引用是存在的，代码就能执行。
+- import 和 require [参考资料](https://segmentfault.com/a/1190000021911869)
+    - CommonJs 规范规定，每个模块内部，module变量代表当前模块。这个变量是一个对象，它的 exports属性（即module.exports）是对外的接口，加载某个模块，其实是加载该模块的module.exports属性。
+    - 实质是整体加载fs模块（即加载fs的所有方法），生成一个对象（_fs），然后再从这个对象上面读取 3 个方法。这种加载称为“运行时加载”，因为只有运行时才能得到这个对象，导致完全没办法在编译时做“静态优化”
+    - 所有代码运行在模块作用域，不会污染全局作用域
+    - 模块可以多次加载，但是只会在第一次加载时运行一次，然后运行结果就被缓存了，以后再加载，就直接读取缓存结果。要想让模块再次运行，必须清除缓存。
+    - 模块加载的顺序，按照其在代码中出现的顺序
+    - 如果一个模块的对外接口，就是一个单一的值，最好不要使用exports输出，最好使用module.exports输出
+    - 如果想要多次执行某个模块，可以让该模块输出一个函数，然后每次require这个模块的时候，重新执行一下输出的函数。所有缓存的模块保存在require.cache之中
+    - ES6 模块的设计思想是尽量的静态化，使得编译时就能确定模块的依赖关系，以及输入和输出的变量。
+    - 代码的实质是从fs模块加载 3 个方法，其他方法不加载。这种加载称为“编译时加载”或者静态加载，即 ES6 可以在编译时就完成模块加载，效率要比 CommonJS 模块的加载方式高。当然，这也导致了没法引用 ES6 模块本身，因为它不是对象
+    - export命令规定的是对外的接口，必须与模块内部的变量建立一一对应关系
+    - import命令输入的变量都是只读的 |import命令具有提升效果|import是静态执行，所以不能使用表达式和变量|import语句是 Singleton 模式
+- export[参考资料](https://blog.duhbb.com/2023/04/46468.html)
+    - export与export default均可用于导出常量、函数、文件、模块等
+    - 使用 export default 导出时，不能使用大括号 {} 将多个声明同时导出
+    - 在一个文件或模块中，export、import可以有多个，export default仅有一个
+    - export default 用于规定模块的默认对外接口，只能有一个，所以 export default 在同一个模块中只能出现一次。
+    - 通过export方式导出，在导入时要加{ }，export default则不需要，因为它本身只能有一个
+    - export 可以直接导出或者先定义后导出都可以，export default只能先定义后导出（并且不加花括号）
 - webpack常用loader [参考](https://vue3js.cn/interview/webpack/Loader.html)
     - 样式loader：style.* less.* sass.* css.*
     -  file-*（识别出资源模块，移动到指定输出⽬录，输出目录地址） url-*(图片转化为base64) html-minify-* babel loader()
@@ -370,7 +382,6 @@ https://blog.csdn.net/RunLovelace/article/details/127767470
     - apply bind call 函数 apply是数组[手写](./writing_code_js/prototype.js)
 
 - Js几种数据类型
-
     （7种基本类型+一个对象 基本类型在栈区 对象在堆区）NaN 是一个特殊值，它和自身不相等，是唯一一个非自反（自反，reflexive，即 x === x 不成立）的值
 - ES5 和 ES6 的异同 [参考资料](https://www.cnblogs.com/angel648/articles/13256535.html)
     - 引入了一种新的原始数据类型symbol以支持唯一值
@@ -541,15 +552,18 @@ https://juejin.cn/post/7203277707755896869
 - 组件 antd常用
     - Button, Dropdown, Input, Menu, MenuProps, message, Modal, Dropdown steps组件（用于样式）
     - button组件
+- css 文件引入
 
 - coocik登录和token登录，菜单验证方式
     - 
+- 鉴权
+    - cookie鉴权，设置cookie后登录以及每次请求时，由后端验证cookie
 - service模块：
     - 封装了请求功能
     - 处理代理转发环境
     - 请求成功的处理
     - 请求失败的提示
-    - 基于axios的request功能，对错误code进行展示以及登录跳转
+    - 基于axios的request功能，对错误code进行展示以及返回无权限时自动登录跳转
     - 基于request的post， get， download 和upload方法
 - 日期组件
     - 
