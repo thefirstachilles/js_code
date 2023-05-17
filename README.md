@@ -481,8 +481,11 @@ https://blog.csdn.net/RunLovelace/article/details/127767470
 
 - 观察者模式 [代码](./design_mode/myObserve.js)
 
-# 输出题
-https://juejin.cn/post/6959043611161952269 （看到第三题）
+# Typescript
+- 在TS中，一个声明会创建一个实体，为以下三种之一：
+    - 命名空间：使用 namespace 来声明命名空间，命名空间的声明会创建一个命名空间和值，至于什么是命名空间，会在后续的文章中介绍；
+    - 类型：类型的声明一般使用 interface 或 type 关键字，得到一个类型，此外， class 和 enum 关键字的声明也会得到一个类型；
+    - 值：通常使用 var , let , const 来声明一个变量，创建一个值，此外，class ，enum和 function关键字也会声明一个值。
 
 # 面试算法题 
 https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-48c1d/wo-xie-le--f7a92/
@@ -491,9 +494,9 @@ https://juejin.cn/post/6987320619394138148
 # 手写js代码
 https://juejin.cn/post/6946136940164939813
 - 异步类
-    - [使用Promise封装AJAX请求](./writing_code_promise/request.js)
-    - [循环打印红黄绿](./writing_code_promise/red_green_light.js)
-    - [用Promise实现图片的异步加载](./writing_code_promise/Image_load.js)
+    - [使用Promise封装AJAX请求](./writing_code/asyn/request.js)
+    - [循环打印红黄绿](./writing_code/red_green_light.js)
+    - [用Promise实现图片的异步加载](./writing_code/Image_load.js)
 - react类
     - [count hook](https://stackblitz.com/edit/react-ts-6vdpuv?file=App.tsx)
 - js类
@@ -548,7 +551,7 @@ https://juejin.cn/post/7203277707755896869
 - 页面搜索与结果展示
     - 搜索组件与结果组件的信息是由createContext.Provider实现的
     - 共享的方法有 defaultSearch, syncUrlOptions, getResult, searchReturns,resultReturns, doSearch 
-    - 实现数据的搜索，url路由的更改，接口请求等功能，具体地说，提供provider中提供了search方法，与表单的onfinish结合调用
+    - 实现数据的搜索，url与请求的同步更改与参数提取，接口请求等功能，具体地说，提供provider中提供了search方法，与表单的onfinish结合调用
 - 组件 antd常用
     - Button, Dropdown, Input, Menu, MenuProps, message, Modal, Dropdown steps组件（用于样式）
     - button组件
@@ -565,14 +568,28 @@ https://juejin.cn/post/7203277707755896869
     - 请求失败的提示
     - 基于axios的request功能，对错误code进行展示以及返回无权限时自动登录跳转
     - 基于request的post， get， download 和upload方法
-- 日期组件
-    - 
 
+- useSearchV2 参数（defaultSearch, syncUrlOptions, getResult ）
+    - useSearch 
+    - 参数（defaultSearch, syncUrlOptions）
+    - 过程（useObject 包裹 parseUrlV3（用于从url下取参数），返回一个状态与两个方法（用于参数覆盖和合并  changeSearch, resetSearch） 与 在副作用里留下了syncUrlV3（将参数同步到url））
+    - 返回（searchReturns={search, resetSearch, changeSearch}）
+    - useResult 
+    - 参数（getResult） 
+    - 过程（处理的getResult方法，增加了loading,result,error状态和getResult，setResult，resetResult方法）
+    - 返回（resultReturns）
+    - doSearch  
+    - 参数（搜索参数）
+    - 过程（使用 resultReturns 中的 getResult，并且调用了searchReturns中的changeSearch方法重设参数（重设时就会产生副作用出同步参数改变到url））
+    - 依赖于前两个方法的返回 searchReturns, resultReturns 决定是返回新函数还是从前的函数
+    - 返回 resultReturns的getResult方法执行结果
 - 中英文
     - i18n 组件（用于路由和资源内容)
     - 语言状态写在localStorage中
     - 在项目根页面中根据语言状态初始化i18n，校验是否有重复key
     - t(), 根据语言设定切换
+- 日期
+    - 使用momentjs
 
 
 
