@@ -594,7 +594,7 @@ https://juejin.cn/post/7203277707755896869
     - 依赖于前两个方法的返回 searchReturns, resultReturns 决定是返回新函数还是从前的函数
     - 返回 resultReturns的getResult方法执行结果
 - 中英文
-    - i18n 组件（用于路由和资源内容)
+    - i18n 组件（用于路由和资源内容）
     - 语言状态写在localStorage中
     - 在项目根页面中根据语言状态初始化i18n，校验是否有重复key
     - t(), 根据语言设定切换

@@ -1,0 +1,55 @@
+<style>
+.triangle1{ width: 0;    
+            height: 0;    
+            border-top: 50px solid red;    
+            border-right: 50px solid transparent;    
+            border-left: 50px solid transparent;
+        }
+.triangle2 {
+    width: 0;
+    height: 0;
+    border-top: 100px solid red;
+    border-right: 100px solid transparent;
+}
+.simcircle{
+    border: 100px solid transparent;
+    width: 0;
+    height: 0;
+    border-radius: 100px;
+    border-top-color: red;
+}
+/* .square {
+  width: 10%;
+  height: 10vw;
+  background: tomato;
+} */
+/* .square {
+  width: 20%;
+  height: 0;
+  padding-top: 20%;
+  background: orange;
+} */
+.square {
+  width: 30%;
+  overflow: hidden;
+  background: yellow;
+} 
+ .square::after {
+  content: '';
+  display: block;
+  margin-top: 100%;
+}
+.line{
+    transform: scale(0.5,0.5);
+    width: 300px;
+    height: 1px;
+    background-color: #000;}
+</style>
+
+<div>
+    <div class="triangle1"></div>
+    <div class="triangle2"></div>
+    <div class="simcircle"></div>
+    <div class="square"></div>
+    <div class="line"></div>
+</div>
