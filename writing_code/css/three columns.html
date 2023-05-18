@@ -1,0 +1,84 @@
+<style>
+/* .outer {
+  position: relative;
+  height: 100px;
+}
+
+.left {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: tomato;
+}
+
+.right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 100px;
+  background: gold;
+}
+
+.center {
+  margin-left: 100px;
+  margin-right: 200px;
+  height: 100px;
+  background: lightgreen;
+} */
+/* .outer {
+  display: flex;
+  height: 100px;
+}
+
+.left {
+  width: 100px;
+  background: tomato;
+}
+
+.right {
+  width: 100px;
+  background: gold;
+}
+
+.center {
+  flex: 1;
+  background: lightgreen;
+} */
+.outer {
+  height: 100px;
+}
+
+.left {
+  float: left;
+  width: 100px;
+  height: 100px;
+  background: tomato;
+}
+
+.right {
+  height: 100px;
+  margin-left: 100px;
+  margin-right: 200px;
+  background: lightgreen;
+  
+}
+
+.center {
+  float: right;
+  width: 200px;
+  height: 100px;
+  background: gold;
+}
+
+
+</style>
+<html>
+    <body>
+        <div class="outer">
+            <div class="left">left</div>
+            <div class="center">center</div>
+            <div class="right">right</div>
+        </div>
+    </body>
+</html>

@@ -140,6 +140,11 @@
     - text-align｜absolute｜flex 
 - 两栏布局
     - 浮动+margin｜浮动+overflow｜flex｜绝对定位
+- margin的应用 [参考资料](https://segmentfault.com/a/1190000007184954)
+    - 元素没有设置浮动且没有设置定位或者 position 为 static。当设置负值的 margin 的方向为 top 或者 left 的时候，元素会按照设置的方向移动相应的距离。当设置负值的 margin 的方向为 bottom 或者 right 的时候，元素本身并不会移动，元素后面的其他元素会往该元素的方向移动相应的距离，并且覆盖在该元素上面
+    - 如果元素没有设置浮动，但是设置了相对定位。当设置负值的 margin 的方向为 top 或者 left 的时候，元素也会按照设置的方向移动相应的距离。 当设置 margin-bottom/left 的时候，元素本身也不会移动，元素后面的其他元素也会往该元素的方向移动相应的距离，但是，该元素会覆盖在后面的元素上面
+    - 如果元素没有设置浮动，但是设置了绝对定位，设置 margin 为负值的时候，表现如下：设置的 margin 的方向为 top 或者 left。当设置负值的 margin 的方向为 top 或者 left 的时候，元素也会按照设置的方向移动相应的距离。设置的 margin 的方向为 bottom 或者 right。由于设置绝对定位的元素已经脱离了标准文档流，所以，设置 margin-right/bottom 对后面的元素并没有影响。
+    - 对于设置了浮动的元素，设置 margin 为负值的时候，表现如下：如果设置的 margin 的方向与浮动的方向相同，那么，元素会往对应的方向移动对应的距离。如果设置 margin 的方向与浮动的方向相反，则元素本身不动，元素之前或者之后的元素会向该元素的方向移动相应的距离（并且覆盖）
 - 三栏布局
     - 绝对定位 ｜ flex ｜浮动+margin（中间一栏必须放在最后）｜ 圣杯布局 （父元素paadding预留左右两栏，中间一列在最前，margin负值使其在同一行）｜双飞翼布局（中间栏的margin预留）
 - 垂直居中方法
@@ -278,7 +283,9 @@ https://juejin.cn/post/6916157109906341902/
         - location.hash + iframe
         - document.domain + iframe document.domain作用是获取/设置当前文档的原始域部分，同源策略会判断两个文档的原始域是否相同来判断是否跨域。这意味着只要把这个值设置成一样就可以解决跨域问题了。只能用于二级域名相同的情况下，比如 a.test.com 和 b.test.com 适用于该方式。
 11. 浏览器线程与进程 https://juejin.cn/post/6854573217655291918
-12. hash标识和history api
+- hash标识和history api
+    - 改变hash不会触发页面跳转，因为hash链接是当前页面中的某个片段，所以如果hash有变化，那么页面将会滚动到hash所连接的位置。但是页面中如果不存在hash对应的片段，则没有任何效果。href = protocol + host(hostname+port) + pathname + search + hash 通过hashchange事件可以监听到hash值的变化。
+    - history pushstate 和 replacestate如果服务端没有配置新更新的 url ，一刷新浏览器就会报错，因为刷新浏览器会真实地向服务器发送一个 http 的请求
 - 浏览器进程与线程
     - 进程代表了一个程序，线程是进程里执行一段指令的时间
     - 浏览器主线程｜网络进程｜GPU进程｜渲染进程｜插件进程
@@ -476,7 +483,7 @@ https://blog.csdn.net/RunLovelace/article/details/127767470
 # 设计模式
 [参考资料]()
 - 常见设计模式：
-    - 单例模式｜工厂模式｜策略模式｜代理模式｜中介者模式｜装饰者模式
+    - 单例模式（只有一个）｜工厂模式（子类创建）｜适配器模式（把两个无关类联系在一起｜策略模式｜代理模式（控制访问）｜中介者模式｜装饰者模式（类继承，继承的替代）｜ 外观模式
 - 发布订阅者模式[参考资料](https://vue3js.cn/interview/design/Observer%20%20Pattern.html) [代码](./design_mode/Sub-Pub.js)
 
 - 观察者模式 [代码](./design_mode/myObserve.js)
@@ -509,14 +516,17 @@ https://juejin.cn/post/6946136940164939813
 - 设计模式
     - [eventBus](./writing_code/data_and_design_mode/EventHub.ts)
 - css格式类
-    - [双翼布局]
-    - [圣杯布局]
-- 功能类
-    - [实现简单路由]
+    - [双翼布局](./writing_code/css/two%20wings.html) 负margin实现
+    - [圣杯布局](./writing_code/css/cup.html)
+    - [两栏布局](./writing_code/css/two%20columns.html)
+    - [三栏布局](./writing_code/css/three%20columns.html)
+    - [三角形/扇形/线段]()
 
+- 功能类
+    - [实现hash路由](./writing_code/framework_code/hashRouter.html)
+    - [实现history路由](./writing_code/framework_code/historyRouter.html)
 2. 实现日期格式化函数
 
-4. 
 5. 实现数组的map方法
 7. 实现非负大整数相加
 9. 将js对象转化为树形结构
