@@ -1,0 +1,122 @@
+<div class="container">
+    <table class="table record">
+        <thead>
+            <tr>
+              <th>Month</th>
+              <th>Savings</th>
+            </tr>
+          </thead>
+        <tbody class="tbody">
+        </tbody>
+    </table>
+    <div class="drag">
+    </div>
+</div>
+<style>
+    html{@font-face{
+    font-family: useFont;
+    src: url("../Downloads/Long_Cang/LongCang-Regular.ttf");
+}
+    }
+.container{
+    display: flex;
+}
+.record{
+        font-family: useFont;
+        text-align:center;
+        border-spacing: 0;
+        border: 0.5px #000 solid;
+        
+     }
+     td{
+        border: 0.5px #000 solid;
+        height: 15vh;
+     }
+     td:nth-child(1){
+        width: 10vw;
+     }
+     td+td{
+        width: 20vw;
+     }
+     .drag{
+        flex: 1;
+     }
+     .drag-item{
+        display: inline-block;
+     }
+    
+</style>
+<script>
+let text_content = '齐丽:青梅竹马，高知夫妻，纯爱至上，白月光无敌。我渴爆我创作。宋丽:上下级，比上下级多，炮友，比炮友真，萍水相逢，春风一度。好渴但我不创作。Stil丽:表面关系良好，实则礼节性捅刀，三分假一分真，香菜榴莲披萨。有饭就能渴。廖丽:互取绰号，敌视以上，朋友以下。有饭就能渴(没有饭)郑丽:老好人和泼妇，平淡无奇，食之无味。不爱渴。杜丽:泼妇对绿茶，从缅北创到东北。鸡飞狗跳，不得安宁，应立法禁止同处一室。难渴。Char丽:关起门叽里咕噜，床头打架床尾和，学哥学弟。有饭就能渴(没有饭)Wede丽:手握援助的美国大款爹和他的宠物小丽。有饭就能渴(没有饭)叶丽:赌五毛钱你们凑一堆主营辱骂凯申，但我没有证据。可以渴。徐丽/吴丽/梁丽/萧丽:被文盲悍匪孙丽人绑架，无法反抗被迫接收叨逼叨，的可怜树洞。出于对树洞的同情，不渴为敬。小陈丽:一身萧索，欲说还休，问心有愧。有饭就能渴(没有饭)小唐丽:大难临头前，劳燕分飞，问心有愧，结局凄凄。渴死我了我创作。小李丽:classical忠犬女王。微笑殆尽后二十多年的眼泪。好渴但痛。大蒋丽:蒋鹿原，蒋老太爷和孙小娥。间歇性渴。小蒋丽:人设反差，互为暗面，激烈对撞，究极阴间，血腥暴力，张力拉满。我渴爆💥我创作。'
+let res = text_content.match(/(?<=[。|\)]?)([\u4e00-\u9fa5A-Za-z\/]+)(?=:)/g)
+let tb = document.getElementsByClassName('tbody')
+tb[0].innerHTML = res.reduce((prev, item,)=>prev + `<tr class="tr"><td>${item}</td><td></td></tr>`,'')
+let new_text = res.reduce((prev,item)=>prev.replace(item+':','。'),text_content)
+let next_arr = new_text.split(/[,|，｜。｜.]/g)
+let dg = document.getElementsByClassName('drag')
+dg[0].innerHTML = next_arr.reduce((prev,item)=>prev +`<div class = 'drag-item'>${item}</div>` ,'')
+
+let dragEl = document.getElementsByClassName("drag-item")
+let container = document.querySelector(".container")
+
+    class Drag {
+      constructor(target, options = { limit: false }) {
+        this.target = target
+        this.options = options
+        this.init()
+      }
+      // 初始化
+      init(){
+        this.target.style.transform = "translate(0px,0px)"
+        this.getBoundary()
+        this.drag()
+      }
+      // 获取父元素的宽高
+      getBoundary() {
+        this.maxWidth = this.target.parentNode.clientWidth
+        this.maxHeight = this.target.parentNode.clientHeight
+      }
+      // 获取目标元素的初始宽高、偏移以及鼠标的起始位置信息
+      getInfo(e) {
+        this.width = this.target.clientWidth
+        this.height = this.target.clientHeight
+
+        this.startX = e.pageX
+        this.startY = e.pageY
+
+        let translateStr = this.target.style.transform
+        const reg = /\-?\d+/g
+        let translateArr = translateStr.match(reg)
+        this.tx = Number(translateArr[0])
+        this.ty = Number(translateArr[1])
+      }
+      // 拖动实现
+      drag() {
+        this.target.addEventListener("mousedown", (e) => {
+          this.getInfo(e)
+          document.onmousemove = (e) => {
+            if(this.options.limit){
+              this.distanceX = Math.max(0, Math.min(this.tx + e.pageX - this.startX, this.maxWidth - this.width))
+              this.distanceY = Math.max(0, Math.min(this.ty + e.pageY - this.startY, this.maxHeight - this.height))
+            }else{
+              this.distanceX = this.tx + e.pageX - this.startX
+              this.distanceY = this.ty + e.pageY - this.startY
+            }
+            this.target.style.transform = `translate(${this.distanceX}px, ${this.distanceY}px)`
+          }
+          document.onmouseup = () => {
+            document.onmousemove = null
+          }
+        })
+      }
+    }
+    
+    /** 注意事项 
+     * 1. 目标元素若存在外边距，那么目标元素在移动时会超出父元素(定位同理)
+     * 2. 父元素若存在内边距，那么目标元素在移动时也会超出父元素
+     */
+    for(let i of dragEl){
+        new Drag(i)
+    }
+    
+</script>
