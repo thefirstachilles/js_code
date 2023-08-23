@@ -15,7 +15,8 @@ function debunce(fn,delay){
             clearTimeout(timer)
             }
         timer=setTimeout(()=>{
-        fn.call(this,...args)
+        fn.call(this,...args);
+        timer = null
         },delay)
         }
     }
