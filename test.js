@@ -1,0 +1,1 @@
+let a = setTimeout(()=>{console.log('q')}, 5000)
